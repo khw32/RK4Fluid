@@ -1,0 +1,1 @@
+../solidSolvers/solidModels/fvPatchFields/componentMixed/componentMixedPointPatchFields.H

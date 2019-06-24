@@ -1,0 +1,3 @@
+"interFluid" is the original class without using "pimple" object.
+"interFluid_v2" is the updated class with the usage of "pimple" object. This version is simplier and hence recommended. 
+

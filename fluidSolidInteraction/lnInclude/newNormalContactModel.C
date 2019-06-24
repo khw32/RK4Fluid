@@ -1,0 +1,1 @@
+../solidSolvers/solidModels/fvPatchFields/solidContact/contactModels/normalContactModels/normalContactModel/newNormalContactModel.C

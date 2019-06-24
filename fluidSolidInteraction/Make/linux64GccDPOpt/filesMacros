@@ -1,0 +1,4 @@
+contactModels = solidSolvers/solidModels/fvPatchFields/solidContact/contactModels
+rheologyLaws = solidSolvers/solidModels/constitutiveModel/rheologyLaws
+thermalLaws = solidSolvers/solidModels/thermalModel/thermalLaws
+LIB = $(FOAM_USER_LIBBIN)/libfluidSolidInteraction

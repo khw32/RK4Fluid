@@ -1,0 +1,1 @@
+../solidSolvers/solidModels/thermalModel/thermalLaws/multiMaterialThermal/multiMaterialThermal.H

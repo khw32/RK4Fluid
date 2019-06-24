@@ -1,0 +1,1 @@
+../solidSolvers/solidModels/thermalModel/thermalModel.H

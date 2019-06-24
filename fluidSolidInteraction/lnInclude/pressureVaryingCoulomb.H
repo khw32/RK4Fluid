@@ -1,0 +1,1 @@
+../solidSolvers/solidModels/fvPatchFields/solidContact/contactModels/frictionContactModels/frictionLaws/pressureVaryingCoulomb/pressureVaryingCoulomb.H
