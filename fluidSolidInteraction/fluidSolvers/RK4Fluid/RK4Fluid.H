@@ -91,7 +91,6 @@ class RK4Fluid
         //- Density
         dimensionedScalar rho_;
 
-
     // Private Member Functions
 
         //- Disallow default bitwise copy construct
@@ -225,7 +224,7 @@ public:
             ) const;
 
         // Edit
-
+        
             //- Evolve the fluid solver
             virtual void evolve();
 };

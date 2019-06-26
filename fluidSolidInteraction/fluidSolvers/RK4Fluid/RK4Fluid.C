@@ -418,7 +418,6 @@ namespace Foam
 
             Uold_ = U_;
             Uc_ = U_;
-            // dt = runTime.deltaT().value();
             phi_ = (fvc::interpolate(U_) & mesh.Sf());
             dU_ = runTime().deltaT().value()
                 * (fvc::laplacian(turbulence_->nuEff(), U_) - fvc::div(phi_,U_));
