@@ -56,23 +56,38 @@ int main(int argc, char *argv[])
     {
         Info<< "Time = " << runTime.value()
             << " (dt = " << runTime.deltaT().value() << ")" << nl << endl;
+
+        // Make the initialization by calling member function
+
         Info<< "\ninitializeFields\n" << endl;
+        
         fsi.initializeFields();
          
-Info<< "\nupdateInterpolator\n" << endl;
+        Info<< "\nupdateInterpolator\n" << endl;
+
         fsi.updateInterpolator();
 
         scalar residualNorm = 0;
 
+        // Make predictions of initial forces and evoke solid solver and update
+        // the residual to prepare for the calculation loop
+
         if (fsi.predictor())
         {Info<< "\nupdateForce\n" << endl;
             fsi.updateForce();
-Info<< "\nsolid solver\n" << endl;
+        Info<< "\nsolid solver\n" << endl;
             fsi.stress().evolve();
 
             residualNorm =
                 fsi.updateResidual();
         }
+
+        // Loop the fluid-solid interaction procedure which is firstly updating
+        // the solid displacement based on the solid solver and then transfer
+        // the deformed mesh to fluid side followed by asking fluid solver to
+        // calculate the pressure and velocity. Again the pressure and viscous
+        // forces are updated and transported to the solid side to solve new
+        // velocity and displacement
 
         do
         {
@@ -91,11 +106,16 @@ Info<< "\nsolid solver\n" << endl;
             residualNorm =
                 fsi.updateResidual();
         }
+
+        // Check residual and iterate the loop until the requirement is met
+
         while
         (
             (residualNorm > fsi.outerCorrTolerance())
          && (fsi.outerCorr() < fsi.nOuterCorr())
         );
+
+        // The final flow field and stress field are written to the output
 
         fsi.flow().updateFields();
         fsi.stress().updateTotalFields();

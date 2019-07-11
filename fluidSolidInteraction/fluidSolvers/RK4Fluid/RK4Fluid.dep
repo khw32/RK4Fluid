@@ -1,7 +1,7 @@
 $(OBJECTS_DIR)/RK4Fluid.o: fluidSolvers/RK4Fluid/RK4Fluid.dep
 fluidSolvers/RK4Fluid/RK4Fluid.dep: fluidSolvers/RK4Fluid/RK4Fluid.C
 fluidSolvers/RK4Fluid/RK4Fluid.dep: fluidSolvers/RK4Fluid/RK4Fluid.H
-fluidSolvers/RK4Fluid/RK4Fluid.dep: ./fluidSolvers/fluidSolver/fluidSolver.H
+fluidSolvers/RK4Fluid/RK4Fluid.dep: ./fluidSolvers/fluidSolver/RK4fluidSolver.H
 fluidSolvers/RK4Fluid/RK4Fluid.dep: $(WM_PROJECT_DIR)/src/finiteVolume/lnInclude/fvMesh.H
 fluidSolvers/RK4Fluid/RK4Fluid.dep: $(WM_PROJECT_DIR)/src/foam/lnInclude/polyMesh.H
 fluidSolvers/RK4Fluid/RK4Fluid.dep: $(WM_PROJECT_DIR)/src/foam/lnInclude/objectRegistry.H
@@ -682,6 +682,7 @@ fluidSolvers/RK4Fluid/RK4Fluid.dep: $(WM_PROJECT_DIR)/src/foam/lnInclude/addToRu
 fluidSolvers/RK4Fluid/RK4Fluid.dep: $(WM_PROJECT_DIR)/src/finiteVolume/lnInclude/findRefCell.H
 fluidSolvers/RK4Fluid/RK4Fluid.dep: $(WM_PROJECT_DIR)/src/finiteVolume/lnInclude/adjustPhi.H
 fluidSolvers/RK4Fluid/RK4Fluid.dep: ./fluidSolidInterface/fluidSolidInterface.H
+fluidSolvers/RK4Fluid/RK4Fluid.dep: ./fluidSolvers/fluidSolver/fluidSolver.H
 fluidSolvers/RK4Fluid/RK4Fluid.dep: ./solidSolvers/solidSolver/solidSolver.H
 fluidSolvers/RK4Fluid/RK4Fluid.dep: ./solidSolvers/solidModels/constitutiveModel/constitutiveModel.H
 fluidSolvers/RK4Fluid/RK4Fluid.dep: ./solidSolvers/solidModels/constitutiveModel/plasticityStressReturnMethods/plasticityStressReturn/plasticityStressReturn.H

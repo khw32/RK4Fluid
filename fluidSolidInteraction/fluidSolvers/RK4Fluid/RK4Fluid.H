@@ -38,7 +38,7 @@ SourceFiles
 #ifndef RK4Fluid_H
 #define RK4Fluid_H
 
-#include "fluidSolver.H"
+#include "RK4fluidSolver.H"
 #include "volFields.H"
 #include "surfaceFields.H"
 #include "singlePhaseTransportModel.H"
@@ -48,7 +48,7 @@ SourceFiles
 
 namespace Foam
 {
-namespace fluidSolvers
+namespace RK4fluidSolvers
 {
 
 /*---------------------------------------------------------------------------*\
@@ -57,7 +57,7 @@ namespace fluidSolvers
 
 class RK4Fluid
 :
-    public fluidSolver
+    public RK4fluidSolver
 {
     // Private data
 
@@ -227,12 +227,13 @@ public:
         
             //- Evolve the fluid solver
             virtual void evolve();
+            virtual void evolveUpdate();
 };
 
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-} // End namespace fluidSolvers
+} // End namespace RK4fluidSolvers
 } // End namespace Foam
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //

@@ -39,18 +39,18 @@ License
 
 namespace Foam
 {
-    namespace fluidSolvers
+    namespace RK4fluidSolvers
     {
         // * * * * * * * * * * * * * * Static Data Members * * * * * * * * * * * * * //
 
         defineTypeNameAndDebug(RK4Fluid, 0);
-        addToRunTimeSelectionTable(fluidSolver, RK4Fluid, dictionary);
+        addToRunTimeSelectionTable(RK4fluidSolver, RK4Fluid, dictionary);
 
         // * * * * * * * * * * * * * * * * Constructors  * * * * * * * * * * * * * * //
 
         RK4Fluid::RK4Fluid(const fvMesh& mesh)
         :
-        fluidSolver(this->typeName, mesh),
+        RK4fluidSolver(this->typeName, mesh),
         U_
         (
             IOobject
@@ -306,7 +306,7 @@ namespace Foam
         {
             Info << "Evolving fluid solver" << endl;
 
-            const fvMesh& mesh = fluidSolver::mesh();
+            const fvMesh& mesh = RK4fluidSolver::mesh();
             /*
             int nCorr(readInt(fluidProperties().lookup("nCorrectors")));
 
@@ -341,6 +341,8 @@ namespace Foam
 
             // Create the Poisson Matrix
 
+            Info << "Creating poisson matrix" << endl;
+                
             fvScalarMatrix pEqn
             (
                 fvm::laplacian(p_)
@@ -541,9 +543,43 @@ namespace Foam
 
         }
 
+        void RK4Fluid::evolveUpdate()
+        {
+            Info << "Solving fluid subiteration loop" << endl;
+
+            const fvMesh& mesh = RK4fluidSolver::mesh();
+
+            // Prepare for the pressure solution
+            label pRefCell = 0;
+            scalar pRefValue = 0.0;
+            setRefCell(p_, fluidProperties(), pRefCell, pRefValue);
+
+            Info << "Creating poisson matrix" << endl;
+                
+            fvScalarMatrix pEqn
+            (
+                fvm::laplacian(p_)
+            );
+            pEqn.setReference(pRefCell, pRefValue);
+
+            // Pressure correction
+
+            U_.correctBoundaryConditions();
+            solve(pEqn == fvc::div(U_)/runTime().deltaT().value());
+            U_ = U_ - (fvc::grad(p_) * runTime().deltaT().value());
+            U_.correctBoundaryConditions();
+
+            phi_ = (fvc::interpolate(U_) & mesh.Sf());
+            turbulence_->correct();
+
+            // Make the fluxes absolut to the mesh motion
+            fvc::makeAbsolute(phi_, U_);
+
+        }
+
         // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-    } // End namespace fluidSolvers
+    } // End namespace RK4fluidSolvers
 } // End namespace Foam
 
 // ************************************************************************* //
