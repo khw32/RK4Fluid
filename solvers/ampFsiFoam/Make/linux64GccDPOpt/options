@@ -60,4 +60,4 @@ EXE_INC = -std=c++11     -I../../fluidSolidInteraction/lnInclude     -I../../Thi
 
 
 
-EXE_LIBS =     -lfiniteVolume     -ldynamicFvMesh     -ldynamicMesh     -lincompressibleTransportModels     -lincompressibleTurbulenceModel     -L$(FOAM_USER_LIBBIN)     -lfluidSolidInteraction
+EXE_LIBS =     -lfiniteVolume     -ldynamicFvMesh     -ldynamicMesh     -lincompressibleTransportModels     -lincompressibleTurbulenceModel     -L$(FOAM_USER_LIBBIN)     -linterfaceProperties     -lfluidSolidInteraction

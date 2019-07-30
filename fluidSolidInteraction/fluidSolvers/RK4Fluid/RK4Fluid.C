@@ -314,14 +314,16 @@ namespace Foam
                 readInt(fluidProperties().lookup("nNonOrthogonalCorrectors"));
             */
 
-            // Create Rung-Kutta Coefficients
+            // Rung-Kutta Coefficients
 
-            const scalar b1 = 0.166666666667;
-            const scalar b2 = 0.333333333333;
-            const scalar b3 = 0.333333333333;
-            const scalar b4 = 0.166666666667;
+            scalarList beta(4);
 
-            Info << "\n b1 = " <<b1<< "\n b2 = " <<b2<<"\n b3 = " <<b3<<"\n b4 = " <<b4<< endl;
+            beta[0] = 0.166666666667;
+            beta[1] = 0.333333333333;
+            beta[2] = 0.333333333333;
+            beta[3] = 0.166666666667;
+
+            Info << "\n b1 = " <<beta[0]<< "\n b2 = " <<beta[1]<<"\n b3 = " <<beta[2]<<"\n b4 = " <<beta[3]<< endl;
             /*
             // Create time controls
 
@@ -335,6 +337,7 @@ namespace Foam
                 runTime.controlDict().lookupOrDefault<scalar>("maxDeltaT", GREAT);
             */
             // Prepare for the pressure solution
+
             label pRefCell = 0;
             scalar pRefValue = 0.0;
             setRefCell(p_, fluidProperties(), pRefCell, pRefValue);
@@ -356,6 +359,7 @@ namespace Foam
             //     }
 
             // Make the fluxes relative to the mesh motion
+
             fvc::makeRelative(phi_, U_);
             /*
             // Read Time Controls
@@ -416,125 +420,54 @@ namespace Foam
 
             // 4th-order Rung-Kutta Algorithm
 
-            // dimensionedScalar dt("dt", dimensionSet(0,0,1,0,0,0,0),SMALL); 
+            // Prepare working variables
+
+            dimensionedScalar normalizedTime("normalizedTime", dimensionSet(0,0,1,0,0,0,0),SMALL);
 
             Uold_ = U_;
             Uc_ = U_;
-            phi_ = (fvc::interpolate(U_) & mesh.Sf());
-            dU_ = runTime().deltaT().value()
-                * (fvc::laplacian(turbulence_->nuEff(), U_) - fvc::div(phi_,U_));
-            Uc_ = Uc_ + b1 * dU_; 
-            U_ = Uold_ + 0.5 * dU_;
+            normalizedTime = runTime().deltaT();
 
-            // Continuity error
-
+            forAll (beta, i)
             {
-            volScalarField contErr = fvc::div(phi_);
 
-            scalar sumLocalContErr = runTime().deltaT().value()*
-                mag(contErr)().weightedAverage(mesh.V()).value();
+                // Calculate flux
 
-            scalar globalContErr = runTime().deltaT().value()*
-                contErr.weightedAverage(mesh.V()).value();
+                phi_ = (fvc::interpolate(U_) & mesh.Sf());
 
-            Info<< "time step continuity errors : sum local = "
-                << sumLocalContErr << ", global = " << globalContErr << endl;
-            }
+                // Calculate U increment
 
-            // Pressure correction
+                dU_ = normalizedTime * (fvc::laplacian(turbulence_->nuEff(), U_) - fvc::div(phi_,U_));
 
-            U_.correctBoundaryConditions();
-            solve(pEqn == fvc::div(U_)/runTime().deltaT().value());
-            U_ = U_ - (fvc::grad(p_) * runTime().deltaT().value());
-            U_.correctBoundaryConditions();
+                // Update variables
 
+                Uc_ = Uc_ + beta[i] * dU_;
+                U_ = Uold_ + 0.5 * dU_;
 
-            phi_ = (fvc::interpolate(U_) & mesh.Sf());
-            dU_ = runTime().deltaT().value()
-                * (fvc::laplacian(turbulence_->nuEff(), U_) - fvc::div(phi_,U_));
-            Uc_ = Uc_ + b2 * dU_; 
-            U_ = Uold_ + 0.5 * dU_;
+                // Continuity error
 
-            // Continuity error
+                {
+                volScalarField contErr = fvc::div(phi_);
 
-            {
-            volScalarField contErr = fvc::div(phi_);
+                scalar sumLocalContErr = runTime().deltaT().value()*
+                    mag(contErr)().weightedAverage(mesh.V()).value();
 
-            scalar sumLocalContErr = runTime().deltaT().value()*
-                mag(contErr)().weightedAverage(mesh.V()).value();
+                scalar globalContErr = runTime().deltaT().value()*
+                    contErr.weightedAverage(mesh.V()).value();
 
-            scalar globalContErr = runTime().deltaT().value()*
-                contErr.weightedAverage(mesh.V()).value();
+                Info<< "time step continuity errors : sum local = "
+                    << sumLocalContErr << ", global = " << globalContErr << endl;
+                }
 
-            Info<< "time step continuity errors : sum local = "
-                << sumLocalContErr << ", global = " << globalContErr << endl;
-            }
+                // Pressure correction
 
-            // Pressure correction
+                U_.correctBoundaryConditions();
+                solve(pEqn == fvc::div(U_)/runTime().deltaT());
+                U_ = U_ - (fvc::grad(p_) * runTime().deltaT());
+                U_.correctBoundaryConditions();
 
-            U_.correctBoundaryConditions();
-            solve(pEqn == fvc::div(U_)/runTime().deltaT().value());
-            U_ = U_ - (fvc::grad(p_) * runTime().deltaT().value());
-            U_.correctBoundaryConditions();
-
-
-            phi_ = (fvc::interpolate(U_) & mesh.Sf());
-            dU_ = runTime().deltaT().value()
-                * (fvc::laplacian(turbulence_->nuEff(), U_) - fvc::div(phi_,U_));
-            Uc_ = Uc_ + b3 * dU_; 
-            U_ = Uold_ + dU_;
-
-            // Continuity error
-
-            {
-            volScalarField contErr = fvc::div(phi_);
-
-            scalar sumLocalContErr = runTime().deltaT().value()*
-                mag(contErr)().weightedAverage(mesh.V()).value();
-
-            scalar globalContErr = runTime().deltaT().value()*
-                contErr.weightedAverage(mesh.V()).value();
-
-            Info<< "time step continuity errors : sum local = "
-                << sumLocalContErr << ", global = " << globalContErr << endl;
-            }
-
-            // Pressure correction
-
-            U_.correctBoundaryConditions();
-            solve(pEqn == fvc::div(U_)/runTime().deltaT().value());
-            U_ = U_ - (fvc::grad(p_) * runTime().deltaT().value());
-            U_.correctBoundaryConditions();
-
-
-            phi_ = (fvc::interpolate(U_) & mesh.Sf());
-            dU_ = runTime().deltaT().value()
-                * (fvc::laplacian(turbulence_->nuEff(), U_) - fvc::div(phi_,U_));
-            Uc_ = Uc_ + b4 * dU_; 
-            U_ = Uold_ + dU_;
-
-            // Continuity error
-            
-            {
-            volScalarField contErr = fvc::div(phi_);
-
-            scalar sumLocalContErr = runTime().deltaT().value()*
-                mag(contErr)().weightedAverage(mesh.V()).value();
-
-            scalar globalContErr = runTime().deltaT().value()*
-                contErr.weightedAverage(mesh.V()).value();
-
-            Info<< "time step continuity errors : sum local = "
-                << sumLocalContErr << ", global = " << globalContErr << endl;
             }
             
-            // Pressure correction
-
-            U_.correctBoundaryConditions();
-            solve(pEqn == fvc::div(U_)/runTime().deltaT().value());
-            U_ = U_ - (fvc::grad(p_) * runTime().deltaT().value());
-            U_.correctBoundaryConditions();
-
             phi_ = (fvc::interpolate(U_) & mesh.Sf());
             turbulence_->correct();
 
@@ -553,27 +486,58 @@ namespace Foam
             label pRefCell = 0;
             scalar pRefValue = 0.0;
             setRefCell(p_, fluidProperties(), pRefCell, pRefValue);
-
+            
             Info << "Creating poisson matrix" << endl;
-                
-            fvScalarMatrix pEqn
-            (
-                fvm::laplacian(p_)
-            );
-            pEqn.setReference(pRefCell, pRefValue);
 
-            // Pressure correction
+            int nCorr(readInt(fluidProperties().lookup("nCorrectors")));
 
-            U_.correctBoundaryConditions();
-            solve(pEqn == fvc::div(U_)/runTime().deltaT().value());
-            U_ = U_ - (fvc::grad(p_) * runTime().deltaT().value());
-            U_.correctBoundaryConditions();
+            for (int corr = 0; corr < nCorr; corr++)  
+            {
+                fvScalarMatrix pEqn
+                (
+                    fvm::laplacian(p_)
+                );
+                pEqn.setReference(pRefCell, pRefValue);
 
-            phi_ = (fvc::interpolate(U_) & mesh.Sf());
-            turbulence_->correct();
+                phi_ = (fvc::interpolate(U_) & mesh.Sf());
 
-            // Make the fluxes absolut to the mesh motion
-            fvc::makeAbsolute(phi_, U_);
+                // Pressure correction
+
+                U_.correctBoundaryConditions();
+                solve(pEqn == fvc::div(U_)/runTime().deltaT());
+                //solve(pEqn == fvc::div(U_));
+                U_ = U_ - (fvc::grad(p_) * runTime().deltaT());
+                //U_ = U_ - (fvc::grad(p_));
+                // U_.correctBoundaryConditions();
+
+                // phi_ = (fvc::interpolate(U_) & mesh.Sf());
+                phi_ -= pEqn.flux()* runTime().deltaT();
+            
+            // Continuity error
+
+                {
+                volScalarField contErr = fvc::div(phi_);
+
+                scalar sumLocalContErr = runTime().deltaT().value()*
+                    mag(contErr)().weightedAverage(mesh.V()).value();
+
+                scalar globalContErr = runTime().deltaT().value()*
+                    contErr.weightedAverage(mesh.V()).value();
+
+                Info<< "time step continuity errors : sum local = "
+                    << sumLocalContErr << ", global = " << globalContErr << endl;
+                }
+
+                // Make the fluxes relative to the mesh motion
+                fvc::makeRelative(phi_, U_);
+                U_.correctBoundaryConditions();
+
+            }
+
+                turbulence_->correct();
+
+                // Make the fluxes absolut to the mesh motion
+                fvc::makeAbsolute(phi_, U_);
 
         }
 

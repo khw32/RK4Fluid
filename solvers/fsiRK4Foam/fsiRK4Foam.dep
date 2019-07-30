@@ -692,8 +692,8 @@ fsiRK4Foam.dep: $(WM_PROJECT_DIR)/src/foam/lnInclude/timeSelector.H
 fsiRK4Foam.dep: $(WM_PROJECT_DIR)/src/foam/lnInclude/scalarRanges.H
 fsiRK4Foam.dep: $(WM_PROJECT_DIR)/src/foam/lnInclude/scalarRange.H
 fsiRK4Foam.dep: $(WM_PROJECT_DIR)/src/dynamicMesh/dynamicFvMesh/lnInclude/dynamicFvMesh.H
-fsiRK4Foam.dep: ../../fluidSolidInteraction/lnInclude/fluidSolidInterface.H
-fsiRK4Foam.dep: ../../fluidSolidInteraction/lnInclude/fluidSolver.H
+fsiRK4Foam.dep: ../../fluidSolidInteraction/lnInclude/RK4fluidSolidInterface.H
+fsiRK4Foam.dep: ../../fluidSolidInteraction/lnInclude/RK4fluidSolver.H
 fsiRK4Foam.dep: ../../fluidSolidInteraction/lnInclude/solidSolver.H
 fsiRK4Foam.dep: ../../fluidSolidInteraction/lnInclude/constitutiveModel.H
 fsiRK4Foam.dep: ../../fluidSolidInteraction/lnInclude/plasticityStressReturn.H
@@ -829,7 +829,6 @@ fsiRK4Foam.dep: $(WM_PROJECT_DIR)/src/foam/lnInclude/setRootCase.H
 fsiRK4Foam.dep: $(WM_PROJECT_DIR)/src/foam/lnInclude/createTime.H
 fsiRK4Foam.dep: $(WM_PROJECT_DIR)/src/dynamicMesh/dynamicFvMesh/lnInclude/createDynamicFvMesh.H
 fsiRK4Foam.dep: createSolidMesh.H
-fsiRK4Foam.dep: createPoissonMatrix.H
 $(OBJECTS_DIR)/fsiRK4Foam.o: $(EXE_DEP)
 $(OBJECTS_DIR)/fsiRK4Foam.o:
 	@SOURCE_DIR=.

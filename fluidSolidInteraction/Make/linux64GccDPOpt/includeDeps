@@ -22,11 +22,14 @@ include $(contactModels)/normalContactModels/normalContactModel/newNormalContact
 include $(contactModels)/normalContactModels/standardPenalty/standardPenalty.dep
 include fluidSolvers/fluidSolver/fluidSolver.dep
 include fluidSolvers/fluidSolver/newFluidSolver.dep
+include fluidSolvers/fluidSolver/RK4fluidSolver.dep
+include fluidSolvers/fluidSolver/RK4newFluidSolver.dep
 include fluidSolvers/icoFluid/icoFluid.dep
 include fluidSolvers/pisoFluid/pisoFluid.dep
 include fluidSolvers/consistentIcoFluid/consistentIcoFluid.dep
 include fluidSolvers/interFluid/interFluid.dep
 include fluidSolvers/interFluid_v2/interFluid_v2.dep
+include fluidSolvers/RK4Fluid/RK4Fluid.dep
 include fluidSolvers/fvPatchFields/freeSurfacePressure/freeSurfacePressureFvPatchScalarField.dep
 include fluidSolvers/fvPatchFields/freeSurfaceVelocity/freeSurfaceVelocityFvPatchVectorField.dep
 include fluidSolvers/fvPatchFields/extrapolated/extrapolatedFvPatchFields.dep
@@ -98,4 +101,4 @@ include solidSolvers/solidModels/eig3/eig3Field.dep
 include solidSolvers/solidModels/nonLinearGeometry/nonLinearGeometry.dep
 include solidSolvers/solidModels/constitutiveModel/tractionBoundaryGradient/tractionBoundaryGradient.dep
 include fluidSolidInterface/fluidSolidInterface.dep
-include fluidSolvers/RK4Fluid/RK4Fluid.dep
+include fluidSolidInterface/RK4fluidSolidInterface.dep

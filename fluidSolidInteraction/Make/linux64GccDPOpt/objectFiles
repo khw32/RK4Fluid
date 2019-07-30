@@ -23,11 +23,14 @@ $(OBJECTS_DIR)/newNormalContactModel.o\
 $(OBJECTS_DIR)/standardPenalty.o\
 $(OBJECTS_DIR)/fluidSolver.o\
 $(OBJECTS_DIR)/newFluidSolver.o\
+$(OBJECTS_DIR)/RK4fluidSolver.o\
+$(OBJECTS_DIR)/RK4newFluidSolver.o\
 $(OBJECTS_DIR)/icoFluid.o\
 $(OBJECTS_DIR)/pisoFluid.o\
 $(OBJECTS_DIR)/consistentIcoFluid.o\
 $(OBJECTS_DIR)/interFluid.o\
 $(OBJECTS_DIR)/interFluid_v2.o\
+$(OBJECTS_DIR)/RK4Fluid.o\
 $(OBJECTS_DIR)/freeSurfacePressureFvPatchScalarField.o\
 $(OBJECTS_DIR)/freeSurfaceVelocityFvPatchVectorField.o\
 $(OBJECTS_DIR)/extrapolatedFvPatchFields.o\
@@ -99,4 +102,4 @@ $(OBJECTS_DIR)/eig3Field.o\
 $(OBJECTS_DIR)/nonLinearGeometry.o\
 $(OBJECTS_DIR)/tractionBoundaryGradient.o\
 $(OBJECTS_DIR)/fluidSolidInterface.o\
-$(OBJECTS_DIR)/RK4Fluid.o
+$(OBJECTS_DIR)/RK4fluidSolidInterface.o

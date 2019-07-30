@@ -59,4 +59,4 @@ EXE_INC =     -I../../fluidSolidInteraction/lnInclude     -I$(LIB_SRC)/finiteVol
 
 
 
-EXE_LIBS =     -lfiniteVolume     -lincompressibleTurbulenceModel     -lincompressibleRASModels     -lincompressibleLESModels     -lincompressibleTransportModels     -ldynamicFvMesh     -ldynamicMesh     -lmeshTools     -L$(FOAM_USER_LIBBIN)     -lfluidSolidInteraction
+EXE_LIBS =     -lfiniteVolume     -lincompressibleTurbulenceModel     -lincompressibleRASModels     -lincompressibleLESModels     -lincompressibleTransportModels     -ldynamicFvMesh     -ldynamicMesh     -lmeshTools     -L$(FOAM_USER_LIBBIN)     -lfluidSolidInteraction     -linterfaceProperties

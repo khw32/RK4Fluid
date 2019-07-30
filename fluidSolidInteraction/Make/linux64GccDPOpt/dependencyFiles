@@ -23,11 +23,14 @@ $(contactModels)/normalContactModels/normalContactModel/newNormalContactModel.de
 $(contactModels)/normalContactModels/standardPenalty/standardPenalty.dep\
 fluidSolvers/fluidSolver/fluidSolver.dep\
 fluidSolvers/fluidSolver/newFluidSolver.dep\
+fluidSolvers/fluidSolver/RK4fluidSolver.dep\
+fluidSolvers/fluidSolver/RK4newFluidSolver.dep\
 fluidSolvers/icoFluid/icoFluid.dep\
 fluidSolvers/pisoFluid/pisoFluid.dep\
 fluidSolvers/consistentIcoFluid/consistentIcoFluid.dep\
 fluidSolvers/interFluid/interFluid.dep\
 fluidSolvers/interFluid_v2/interFluid_v2.dep\
+fluidSolvers/RK4Fluid/RK4Fluid.dep\
 fluidSolvers/fvPatchFields/freeSurfacePressure/freeSurfacePressureFvPatchScalarField.dep\
 fluidSolvers/fvPatchFields/freeSurfaceVelocity/freeSurfaceVelocityFvPatchVectorField.dep\
 fluidSolvers/fvPatchFields/extrapolated/extrapolatedFvPatchFields.dep\
@@ -99,4 +102,4 @@ solidSolvers/solidModels/eig3/eig3Field.dep\
 solidSolvers/solidModels/nonLinearGeometry/nonLinearGeometry.dep\
 solidSolvers/solidModels/constitutiveModel/tractionBoundaryGradient/tractionBoundaryGradient.dep\
 fluidSolidInterface/fluidSolidInterface.dep\
-fluidSolvers/RK4Fluid/RK4Fluid.dep
+fluidSolidInterface/RK4fluidSolidInterface.dep

@@ -23,7 +23,7 @@ License
 
 \*---------------------------------------------------------------------------*/
 
-#include "fluidSolidInterface.H"
+#include "RK4fluidSolidInterface.H"
 #include "volFields.H"
 #include "polyPatchID.H"
 #include "ZoneIDs.H"
@@ -51,20 +51,20 @@ License
 
 namespace Foam
 {
-    defineTypeNameAndDebug(fluidSolidInterface, 0);
-//     defineRunTimeSelectionTable(fluidSolidInterface, dictionary);
+    defineTypeNameAndDebug(RK4fluidSolidInterface, 0);
+//     defineRunTimeSelectionTable(RK4fluidSolidInterface, dictionary);
 }
 
 // * * * * * * * * * * * * * Private Member Functions  * * * * * * * * * * * //
 
-void Foam::fluidSolidInterface::calcCurrentSolidZonePoints() const
+void Foam::RK4fluidSolidInterface::calcCurrentSolidZonePoints() const
 {
     // Find global face zones
     if (currentSolidZonePointsPtr_)
     {
         FatalErrorIn
         (
-            "void fluidSolidInterface::"
+            "void RK4fluidSolidInterface::"
             "calcCurrentSolidZonePoints() const"
         )
             << "Current solid zone points alarady exist"
@@ -75,14 +75,14 @@ void Foam::fluidSolidInterface::calcCurrentSolidZonePoints() const
         new vectorField(stress().currentFaceZonePoints(solidZoneIndex()));
 }
 
-void Foam::fluidSolidInterface::calcCurrentSolidZonePatch() const
+void Foam::RK4fluidSolidInterface::calcCurrentSolidZonePatch() const
 {
     // Find global face zones
     if (currentSolidZonePatchPtr_)
     {
         FatalErrorIn
         (
-            "void fluidSolidInterface::"
+            "void RK4fluidSolidInterface::"
             "calcCurrentSolidZonePatch() const"
         )
             << "Current solid zone patch alarady exists"
@@ -97,14 +97,14 @@ void Foam::fluidSolidInterface::calcCurrentSolidZonePatch() const
         );
 }
 
-void Foam::fluidSolidInterface::calcFluidToSolidInterpolator() const
+void Foam::RK4fluidSolidInterface::calcFluidToSolidInterpolator() const
 {
     // Find global face zones
     if (fluidToSolidPtr_)
     {
         FatalErrorIn
         (
-            "void fluidSolidInterface::"
+            "void RK4fluidSolidInterface::"
             "calcFluidToSolidInterpolator() const"
         )
             << "Fluid to solid interpolator already exists"
@@ -233,14 +233,14 @@ void Foam::fluidSolidInterface::calcFluidToSolidInterpolator() const
     }
 }
 
-// void Foam::fluidSolidInterface::calcGgiFluidToSolidInterpolator() const
+// void Foam::RK4fluidSolidInterface::calcGgiFluidToSolidInterpolator() const
 // {
 //     // Find global face zones
 //     if (ggiFluidToSolidPtr_)
 //     {
 //         FatalErrorIn
 //         (
-//             "void fluidSolidInterface::"
+//             "void RK4fluidSolidInterface::"
 //             "calcGgiFluidToSolidInterpolator() const"
 //         )
 //             << "Ggi fluid to solid interpolator already exists"
@@ -340,14 +340,14 @@ void Foam::fluidSolidInterface::calcFluidToSolidInterpolator() const
 // }
 
 
-void Foam::fluidSolidInterface::calcGgiInterpolator() const
+void Foam::RK4fluidSolidInterface::calcGgiInterpolator() const
 {
     // Create extended ggi interpolation
     if (ggiInterpolatorPtr_)
     {
         FatalErrorIn
         (
-            "void fluidSolidInterface::"
+            "void RK4fluidSolidInterface::"
             "calcGgiInterpolator() const"
         )
             << "Ggi interpolator already exists"
@@ -499,14 +499,14 @@ void Foam::fluidSolidInterface::calcGgiInterpolator() const
 }
 
 
-void Foam::fluidSolidInterface::calcSolidToFluidInterpolator() const
+void Foam::RK4fluidSolidInterface::calcSolidToFluidInterpolator() const
 {
     // Find global face zones
     if (solidToFluidPtr_)
     {
         FatalErrorIn
         (
-            "void fluidSolidInterface::"
+            "void RK4fluidSolidInterface::"
             "calcSolidToFluidInterpolator() const"
         )
             << "Solid to fluid interpolator already exists"
@@ -587,7 +587,7 @@ void Foam::fluidSolidInterface::calcSolidToFluidInterpolator() const
 }
 
 
-void Foam::fluidSolidInterface::
+void Foam::RK4fluidSolidInterface::
 calcAccumulatedFluidInterfaceDisplacement() const
 {
     // Read accumulated displacement
@@ -595,7 +595,7 @@ calcAccumulatedFluidInterfaceDisplacement() const
     {
         FatalErrorIn
         (
-            "void fluidSolidInterface::"
+            "void RK4fluidSolidInterface::"
             "calcAccumulatedFluidInterfaceDisplacement() const"
         )
             << "Accumulated displacement field already exists"
@@ -653,14 +653,14 @@ calcAccumulatedFluidInterfaceDisplacement() const
 }
 
 
-void Foam::fluidSolidInterface::calcMinEdgeLength() const
+void Foam::RK4fluidSolidInterface::calcMinEdgeLength() const
 {
     // Read accumulated displacement
     if (minEdgeLengthPtr_)
     {
         FatalErrorIn
         (
-            "void fluidSolidInterface::"
+            "void RK4fluidSolidInterface::"
             "calcMinEdgeLength() const"
         )
             << "Minimal edge lengths already exist"
@@ -711,7 +711,7 @@ void Foam::fluidSolidInterface::calcMinEdgeLength() const
 }
 
 Foam::vectorIOField&
-Foam::fluidSolidInterface::accumulatedFluidInterfaceDisplacement()
+Foam::RK4fluidSolidInterface::accumulatedFluidInterfaceDisplacement()
 {
     if (!accumulatedFluidInterfaceDisplacementPtr_)
     {
@@ -722,7 +722,7 @@ Foam::fluidSolidInterface::accumulatedFluidInterfaceDisplacement()
 }
 
 
-const Foam::scalarField& Foam::fluidSolidInterface::minEdgeLength() const
+const Foam::scalarField& Foam::RK4fluidSolidInterface::minEdgeLength() const
 {
     if (!minEdgeLengthPtr_)
     {
@@ -734,7 +734,7 @@ const Foam::scalarField& Foam::fluidSolidInterface::minEdgeLength() const
 
 // * * * * * * * * * * * * * * * * Constructors  * * * * * * * * * * * * * * //
 
-Foam::fluidSolidInterface::fluidSolidInterface
+Foam::RK4fluidSolidInterface::RK4fluidSolidInterface
 (
     dynamicFvMesh& fMesh,
     fvMesh& sMesh
@@ -838,7 +838,7 @@ Foam::fluidSolidInterface::fluidSolidInterface
 
     if (!solidPatch.active())
     {
-        FatalErrorIn("fluidSolidInterface::fluidSolidInterface(...)")
+        FatalErrorIn("RK4fluidSolidInterface::RK4fluidSolidInterface(...)")
             << "Solid patch name " << solidPatchName << " not found."
                 << abort(FatalError);
     }
@@ -875,7 +875,7 @@ Foam::fluidSolidInterface::fluidSolidInterface
 
     if (!fluidPatch.active())
     {
-        FatalErrorIn("fluidSolidInterface::fluidSolidInterface(...)")
+        FatalErrorIn("RK4fluidSolidInterface::RK4fluidSolidInterface(...)")
             << "Fluid patch name " << fluidPatchName << " not found."
                 << abort(FatalError);
     }
@@ -895,7 +895,7 @@ Foam::fluidSolidInterface::fluidSolidInterface
 
     if (!fluidZone.active())
     {
-        FatalErrorIn("fluidSolidInterface::fluidSolidInterface(...)")
+        FatalErrorIn("RK4fluidSolidInterface::RK4fluidSolidInterface(...)")
             << "Fluid face zone name " << fluidZoneName
                 << " not found.  Please check your face zone definition."
                 << abort(FatalError);
@@ -918,7 +918,7 @@ Foam::fluidSolidInterface::fluidSolidInterface
     {
         FatalErrorIn
         (
-            "fluidSolidInterface::fluidSolidInterface(...)"
+            "RK4fluidSolidInterface::RK4fluidSolidInterface(...)"
         )   << "couplingScheme: " << couplingScheme_
             << " is not a valid choice. "
             << "Options are: IQN-ILS, Aitken, FixedRelaxation"
@@ -977,7 +977,7 @@ Foam::fluidSolidInterface::fluidSolidInterface
 
 // * * * * * * * * * * * * * * * * Destructor  * * * * * * * * * * * * * * * //
 
-Foam::fluidSolidInterface::~fluidSolidInterface()
+Foam::RK4fluidSolidInterface::~RK4fluidSolidInterface()
 {
     deleteDemandDrivenData(currentSolidZonePointsPtr_);
     deleteDemandDrivenData(currentSolidZonePatchPtr_);
@@ -993,7 +993,7 @@ Foam::fluidSolidInterface::~fluidSolidInterface()
 // * * * * * * * * * * * * * * * Member Functions  * * * * * * * * * * * * * //
 
 const Foam::vectorField&
-Foam::fluidSolidInterface::currentSolidZonePoints() const
+Foam::RK4fluidSolidInterface::currentSolidZonePoints() const
 {
     if (!currentSolidZonePointsPtr_)
     {
@@ -1004,7 +1004,7 @@ Foam::fluidSolidInterface::currentSolidZonePoints() const
 }
 
 const Foam::PrimitivePatch<Foam::face, Foam::List, const Foam::pointField&>&
-Foam::fluidSolidInterface::currentSolidZonePatch() const
+Foam::RK4fluidSolidInterface::currentSolidZonePatch() const
 {
     if (!currentSolidZonePatchPtr_)
     {
@@ -1015,7 +1015,7 @@ Foam::fluidSolidInterface::currentSolidZonePatch() const
 }
 
 const std::shared_ptr<RBFInterpolation>&
-Foam::fluidSolidInterface::fluidToSolid() const
+Foam::RK4fluidSolidInterface::fluidToSolid() const
 {
     if (!fluidToSolidPtr_)
     {
@@ -1026,7 +1026,7 @@ Foam::fluidSolidInterface::fluidToSolid() const
 }
 
 // const Foam::ggiZoneInterpolation&
-// Foam::fluidSolidInterface::ggiFluidToSolid() const
+// Foam::RK4fluidSolidInterface::ggiFluidToSolid() const
 // {
 //     if (!ggiFluidToSolidPtr_)
 //     {
@@ -1037,7 +1037,7 @@ Foam::fluidSolidInterface::fluidToSolid() const
 // }
 
 const Foam::ggiZoneInterpolation&
-Foam::fluidSolidInterface::ggiInterpolator() const
+Foam::RK4fluidSolidInterface::ggiInterpolator() const
 {
     if (!ggiInterpolatorPtr_)
     {
@@ -1048,7 +1048,7 @@ Foam::fluidSolidInterface::ggiInterpolator() const
 }
 
 const std::shared_ptr<RBFInterpolation>&
-Foam::fluidSolidInterface::solidToFluid() const
+Foam::RK4fluidSolidInterface::solidToFluid() const
 {
     if (!solidToFluidPtr_)
     {
@@ -1058,7 +1058,7 @@ Foam::fluidSolidInterface::solidToFluid() const
     return solidToFluidPtr_;
 }
 
-void Foam::fluidSolidInterface::initializeFields()
+void Foam::RK4fluidSolidInterface::initializeFields()
 {
     fluidZonePointsDispl_ =
         vectorField
@@ -1148,7 +1148,7 @@ void Foam::fluidSolidInterface::initializeFields()
 }
 
 
-void Foam::fluidSolidInterface::updateInterpolator()
+void Foam::RK4fluidSolidInterface::updateInterpolator()
 {
 //     label interpolatorUpdateFrequency_ = 2;
 
@@ -1177,7 +1177,7 @@ void Foam::fluidSolidInterface::updateInterpolator()
 }
 
 
-void Foam::fluidSolidInterface::updateDisplacement()
+void Foam::RK4fluidSolidInterface::updateDisplacement()
 {
     Info << "\nTime = " << flow().runTime().timeName()
         << ", iteration: " << outerCorr() << endl;
@@ -1458,7 +1458,7 @@ void Foam::fluidSolidInterface::updateDisplacement()
         {
             FatalErrorIn
             (
-                "fluidSolidInterface::updateDisplacement()"
+                "RK4fluidSolidInterface::updateDisplacement()"
             ) << "global zone point map is not availabel"
                 << abort(FatalError);
         }
@@ -1483,7 +1483,7 @@ void Foam::fluidSolidInterface::updateDisplacement()
 }
 
 
-Foam::scalar Foam::fluidSolidInterface::updateWeakDisplacement()
+Foam::scalar Foam::RK4fluidSolidInterface::updateWeakDisplacement()
 {
     vectorField solidZonePointsDisplAtSolid =
         stress().faceZonePointDisplacementIncrement(solidZoneIndex());
@@ -1533,7 +1533,7 @@ Foam::scalar Foam::fluidSolidInterface::updateWeakDisplacement()
         {
             FatalErrorIn
             (
-                "fluidSolidInterface::updateDisplacement()"
+                "RK4fluidSolidInterface::updateDisplacement()"
             )   << "global zone point map is not availabel"
                 << abort(FatalError);
         }
@@ -1643,7 +1643,7 @@ Foam::scalar Foam::fluidSolidInterface::updateWeakDisplacement()
 }
 
 
-void Foam::fluidSolidInterface::updateDisplacementUsingIQNILS()
+void Foam::RK4fluidSolidInterface::updateDisplacementUsingIQNILS()
 {
     // Consider fluidPatchPointsV as a matrix V
     // with as columns the items
@@ -1731,7 +1731,7 @@ void Foam::fluidSolidInterface::updateDisplacementUsingIQNILS()
     }
 }
 
-void Foam::fluidSolidInterface::moveFluidMesh()
+void Foam::RK4fluidSolidInterface::moveFluidMesh()
 {
     // Get fluid patch displacement from fluid zone displacement
 
@@ -1919,7 +1919,7 @@ void Foam::fluidSolidInterface::moveFluidMesh()
         }
         else
         {
-            FatalErrorIn("fluidSolidInterface::moveFluidMesh()")
+            FatalErrorIn("RK4fluidSolidInterface::moveFluidMesh()")
                 << "Problem with fluid mesh motion solver selection"
                     << abort(FatalError);
         }
@@ -1965,7 +1965,7 @@ void Foam::fluidSolidInterface::moveFluidMesh()
 }
 
 
-void Foam::fluidSolidInterface::updateForce()
+void Foam::RK4fluidSolidInterface::updateForce()
 {
     Info << "Setting traction on solid patch" << endl;
 
@@ -2239,7 +2239,7 @@ Info << "coupled" << endl;
 }
 
 
-void Foam::fluidSolidInterface::updateWeakForce()
+void Foam::RK4fluidSolidInterface::updateWeakForce()
 {
     Info << "Setting weak traction on solid patch" << endl;
 
@@ -2457,7 +2457,7 @@ void Foam::fluidSolidInterface::updateWeakForce()
 }
 
 
-void Foam::fluidSolidInterface::updateWeakTraction()
+void Foam::RK4fluidSolidInterface::updateWeakTraction()
 {
     Info << "Update weak traction on solid patch" << endl;
 
@@ -2558,7 +2558,7 @@ void Foam::fluidSolidInterface::updateWeakTraction()
 }
 
 
-void Foam::fluidSolidInterface::predictAndUpdateForce()
+void Foam::RK4fluidSolidInterface::predictAndUpdateForce()
 {
     if (coupled())
     {
@@ -2581,7 +2581,7 @@ void Foam::fluidSolidInterface::predictAndUpdateForce()
 }
 
 
-void Foam::fluidSolidInterface::evolveStress()
+void Foam::RK4fluidSolidInterface::evolveStress()
 {
 //     if (closedFluidDomain())
 //     {
@@ -2700,7 +2700,7 @@ void Foam::fluidSolidInterface::evolveStress()
 }
 
 
-Foam::scalar Foam::fluidSolidInterface::updateResidual()
+Foam::scalar Foam::RK4fluidSolidInterface::updateResidual()
 {
     vectorField solidZonePointsDisplAtSolid =
         stress().faceZonePointDisplacementIncrement(solidZoneIndex());
@@ -2819,7 +2819,7 @@ Foam::scalar Foam::fluidSolidInterface::updateResidual()
 }
 
 
-// bool Foam::fluidSolidInterface::read()
+// bool Foam::RK4fluidSolidInterface::read()
 // {
 //     if (regIOobject::read())
 //     {

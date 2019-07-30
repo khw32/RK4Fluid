@@ -79,11 +79,14 @@ $(contactModels)/normalContactModels/standardPenalty/standardPenalty.C
 
 fluidSolvers/fluidSolver/fluidSolver.C
 fluidSolvers/fluidSolver/newFluidSolver.C
+fluidSolvers/fluidSolver/RK4fluidSolver.C 
+fluidSolvers/fluidSolver/RK4newFluidSolver.C
 fluidSolvers/icoFluid/icoFluid.C
 fluidSolvers/pisoFluid/pisoFluid.C
 fluidSolvers/consistentIcoFluid/consistentIcoFluid.C
 fluidSolvers/interFluid/interFluid.C
 fluidSolvers/interFluid_v2/interFluid_v2.C
+fluidSolvers/RK4Fluid/RK4Fluid.C
 
 
 fluidSolvers/fvPatchFields/freeSurfacePressure/freeSurfacePressureFvPatchScalarField.C
@@ -174,7 +177,8 @@ solidSolvers/solidModels/nonLinearGeometry/nonLinearGeometry.C
 solidSolvers/solidModels/constitutiveModel/tractionBoundaryGradient/tractionBoundaryGradient.C
 
 fluidSolidInterface/fluidSolidInterface.C
+fluidSolidInterface/RK4fluidSolidInterface.C 
 
 LIB = $(FOAM_USER_LIBBIN)/libfluidSolidInteraction
 
-fluidSolvers/RK4Fluid/RK4Fluid.C
+

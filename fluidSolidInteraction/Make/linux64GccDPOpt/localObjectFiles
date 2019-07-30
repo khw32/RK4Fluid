@@ -23,11 +23,14 @@ newNormalContactModel.o\
 standardPenalty.o\
 fluidSolver.o\
 newFluidSolver.o\
+RK4fluidSolver.o\
+RK4newFluidSolver.o\
 icoFluid.o\
 pisoFluid.o\
 consistentIcoFluid.o\
 interFluid.o\
 interFluid_v2.o\
+RK4Fluid.o\
 freeSurfacePressureFvPatchScalarField.o\
 freeSurfaceVelocityFvPatchVectorField.o\
 extrapolatedFvPatchFields.o\
@@ -99,4 +102,4 @@ eig3Field.o\
 nonLinearGeometry.o\
 tractionBoundaryGradient.o\
 fluidSolidInterface.o\
-RK4Fluid.o
+RK4fluidSolidInterface.o

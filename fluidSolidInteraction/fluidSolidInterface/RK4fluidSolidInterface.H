@@ -22,7 +22,7 @@ License
     along with foam-extend.  If not, see <http://www.gnu.org/licenses/>.
 
 Class
-    fluidSolidInterface
+    RK4fluidSolidInterface
 
 Description
     Fluid-structure interface class
@@ -31,12 +31,12 @@ Author
     Zeljko Tukovic, FSB Zagreb.  All rights reserved.
 
 SourceFiles
-    fluidSolidInterface.C
+    RK4fluidSolidInterface.C
 
 \*---------------------------------------------------------------------------*/
 
-#ifndef fluidSolidInterface_H
-#define fluidSolidInterface_H
+#ifndef RK4fluidSolidInterface_H
+#define RK4fluidSolidInterface_H
 
 #include "RK4fluidSolver.H"
 #include "solidSolver.H"
@@ -57,10 +57,10 @@ namespace Foam
 {
 
 /*---------------------------------------------------------------------------*\
-                           Class fluidSolidInterface Declaration
+                           Class RK4fluidSolidInterface Declaration
 \*---------------------------------------------------------------------------*/
 
-class fluidSolidInterface
+class RK4fluidSolidInterface
 :
     public IOdictionary
 {
@@ -250,10 +250,10 @@ class fluidSolidInterface
         const scalarField& minEdgeLength() const;
 
         //- Disallow default bitwise copy construct
-        fluidSolidInterface(const fluidSolidInterface&);
+        RK4fluidSolidInterface(const RK4fluidSolidInterface&);
 
         //- Disallow default bitwise assignment
-        void operator=(const fluidSolidInterface&);
+        void operator=(const RK4fluidSolidInterface&);
 
 
 protected:
@@ -263,7 +263,7 @@ protected:
 public:
 
     //- Runtime type information
-    TypeName("fluidSolidInterface");
+    TypeName("RK4fluidSolidInterface");
 
 
     // Declare run-time constructor selection table
@@ -272,7 +272,7 @@ public:
     // Constructors
 
         //- Construct from components
-        fluidSolidInterface
+        RK4fluidSolidInterface
         (
             dynamicFvMesh& fluidMesh,
             fvMesh& solidMesh
@@ -284,7 +284,7 @@ public:
 
     // Destructor
 
-        virtual ~fluidSolidInterface();
+        virtual ~RK4fluidSolidInterface();
 
 
     // Member Functions

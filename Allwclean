@@ -4,6 +4,7 @@ set -x
 wclean fluidSolidInteraction
 
 wclean solvers/fsiFoam
+wclean solvers/fsiRK4Foam
 wclean solvers/ampFsiFoam
 wclean solvers/weakFsiFoam
 wclean solvers/fluidFoam

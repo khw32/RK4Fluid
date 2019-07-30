@@ -19,4 +19,5 @@ EXE_LIBS = \
     -ldynamicMesh \
     -lmeshTools \
     -L$(FOAM_USER_LIBBIN) \
-    -lfluidSolidInteraction
+    -lfluidSolidInteraction \
+    -linterfaceProperties

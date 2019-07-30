@@ -4,6 +4,7 @@ set -x
 wmake libso fluidSolidInteraction
 
 wmake solvers/fsiFoam
+wmake solvers/fsiRK4Foam
 wmake solvers/myfsiFoam
 wmake solvers/ampFsiFoam
 wmake solvers/weakFsiFoam

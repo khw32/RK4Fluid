@@ -35,7 +35,7 @@ Author
 
 #include "fvCFD.H"
 #include "dynamicFvMesh.H"
-#include "fluidSolidInterface.H"
+#include "RK4fluidSolidInterface.H"
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
@@ -48,7 +48,7 @@ int main(int argc, char *argv[])
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-    fluidSolidInterface fsi(mesh, solidMesh);
+    RK4fluidSolidInterface fsi(mesh, solidMesh);
 
     Info<< "\nStarting time loop\n" << endl;
 
@@ -90,24 +90,40 @@ Info<< "\nsolid solver\n" << endl;
 
         do
         {
+Info<< "\nIncrease outer corrector\n" << endl;
             fsi.outerCorr()++;
 
+Info<< "\nupdate displacement\n" << endl;
             fsi.updateDisplacement();
 
+Info<< "\nmove solid mesh\n" << endl;
             fsi.moveFluidMesh();
+Info<< "\ncheck if statement\n" << endl;
+            if (fsi.outerCorr() == 1)
+            {
+Info<< "\nCase_1 outer corrector = 1\n" << endl;
+                fsi.flow().evolve();
+            }                
 
-            fsi.flow().evolve();
+            else
 
+            {
+Info<< "\nCase_2 outer corrector != 1\n" << endl;
+                fsi.flow().evolveUpdate();
+            } 
+
+Info<< "\nUpdate Force\n" << endl;
             fsi.updateForce();
-
+Info<< "\nSolve solid\n" << endl;
             fsi.stress().evolve();
 
+Info<< "\nUpdate residual\n" << endl;
             residualNorm =
                 fsi.updateResidual();
+Info<< "\ncheck while statement\n" << endl;
         }
 
        // Check residual and iterate the loop until the requirement is met
-
         while
         (
             (residualNorm > fsi.outerCorrTolerance())
@@ -116,8 +132,9 @@ Info<< "\nsolid solver\n" << endl;
 
         // The final flow field and stress field are written to the output
 
-
+Info<< "\nupdate flow fields\n" << endl;
         fsi.flow().updateFields();
+Info<< "\nupdate total fields\n" << endl;
         fsi.stress().updateTotalFields();
 
         runTime.write();
